@@ -1,7 +1,7 @@
 name: extensions
-description: "A new Flutter package project."
+description: "Extensions for dart and flutter"
 version: 0.0.1
-homepage:
+homepage: https://github.com/LeanQChris/extensions.git
 
 environment:
   sdk: ^3.6.0
