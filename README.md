@@ -17,7 +17,7 @@ Add the package to your pubspec.yaml:
 
 ```yaml
 dependencies:
-  extensions:
+  extensions_core:
     path: <path-to-your-local-package>
 ```
 
@@ -25,7 +25,7 @@ Or publish and use it as:
 
 ```yaml
 dependencies:
-  extensions: ^0.0.1
+  extensions_core: ^0.0.1
 ```
 
 Run the following command:
@@ -45,7 +45,7 @@ dart
 
 ```
 import 'package:flutter/material.dart';
-import 'extensions.dart';
+import 'extensions_core.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
 dart
 
 ```
-import 'extensions.dart';
+import 'extensions_core.dart';
 
 void main() {
   String email = "example@email.com";
@@ -101,7 +101,7 @@ void main() {
 dart
 
 ```
-import 'extensions.dart';
+import 'extensions_core.dart';
 
 void main() {
   DateTime date = DateTime.now().subtract(Duration(minutes: 10));
@@ -120,7 +120,7 @@ void main() {
 dart
 
 ```
-import 'extensions.dart';
+import 'extensions_core.dart';
 
 void main() {
   List<int> numbers = [1, 2, 3, 3, 4, 5, 6];
@@ -138,7 +138,7 @@ void main() {
 dart
 
 ```
-import 'extensions.dart';
+import 'extensions_core.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -163,7 +163,7 @@ class HomePage extends StatelessWidget {
 dart
 
 ```
-import 'extensions.dart';
+import 'extensions_core.dart';
 
 void main(BuildContext context) {
   context.showSnackBar("This is a SnackBar!");

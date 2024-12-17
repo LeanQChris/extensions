@@ -1,4 +1,4 @@
-name: extensions
+name: extensions_core
 description: "Extensions for dart and flutter"
 version: 0.0.1
 homepage: https://github.com/LeanQChris/extensions.git
