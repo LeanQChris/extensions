@@ -1,3 +1,3 @@
-## 0.0.1
+## 0.0.2
 
-* Initial Release with basic usefull flutter extensions.
+* Added extensions for theme, platform and text_styles
