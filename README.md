@@ -1,217 +1,258 @@
-# Flutter Extensions Package 🚀
+# Extensions Core
 
-A comprehensive Flutter package that provides utility extensions for simplifying common tasks in Flutter development. These extensions cover Strings, Lists, BuildContext, Navigation, SnackBars, DateTime, and more. Boost your productivity by reducing boilerplate code and improving readability.
+A comprehensive collection of Dart and Flutter extensions that enhance development productivity and code readability.
+
+[![pub package](https://img.shields.io/pub/v/extensions_core.svg)](https://pub.dev/packages/extensions_core)
 
 ## Features
 
-- BuildContext Extensions: Simplifies navigation, dialogs, and SnackBars.
-- DateTime Extensions: Relative time, formatting, and date checks.
-- List Extensions: Chunking, distinct values, and safe element access.
-- String Extensions: Email validation, capitalization, URL checks, and more.
-- Navigation Extensions: Manage routes with fade transitions and replacements.
-- SnackBar Extensions: Easily display and manage SnackBars.
+This package provides a rich set of extensions for common Flutter and Dart types:
 
-### Installation
+- **String Extensions**: Powerful string manipulation and validation methods
+- **List Extensions**: Enhanced list manipulation utilities
+- **DateTime Extensions**: Date formatting and relative time handling
+- **BuildContext Extensions**: Simplified UI interactions (alerts, snackbars)
+- **Theme Extensions**: Easy theme access and manipulation
+- **Navigation Extensions**: Streamlined navigation helpers
+- **Widget Extensions**: Chainable widget modifications
+- **Number Extensions**: Formatting and conversion utilities
 
-Add the package to your pubspec.yaml:
+## Installation
 
-```yaml
-dependencies:
-  extensions_core:
-    path: <path-to-your-local-package>
-```
-
-Or publish and use it as:
+Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  extensions_core: ^0.0.1
+  extensions_core: ^0.0.2
 ```
 
-Run the following command:
+## Usage
 
-bash
+Import the package:
 
+```dart
+import 'package:extensions_core/extensions.dart';
 ```
-flutter pub get
+
+### String Extensions
+
+```dart
+String text = "hello world";
+String email = "user@example.com";
+String url = "https://example.com";
+String phone = "+1234567890";
+
+// String validation
+print(email.isEmail());          // true
+print(url.isUrl());             // true
+print(phone.isPhoneNumber());   // true
+print("123".isNumeric());       // true
+print("abc".isAlphabetic());    // true
+
+// String manipulation
+print(text.capitalize());       // "Hello world"
+print(text.toTitleCase());      // "Hello World"
+print(text.removeWhitespace()); // "helloworld"
+print(text.reverse());          // "dlrow olleh"
+
+// String utilities
+print(text.truncate(5));        // "hello..."
+print("".isNullOrWhiteSpace()); // true
+
+// Password validation helpers
+print("Password123".containsUppercase()); // true
+print("Password123".containsLowercase()); // true
+print("Password123".containsDigit());     // true
 ```
 
-Usage
+### List Extensions
 
-1. BuildContext Extensions
-   Simplify navigation, dialogs, and SnackBars.
+```dart
+List<int> numbers = [1, 2, 2, 3, 4, 5];
+List<String?> items = ["a", null, "b", null, "c"];
 
-dart
+// List operations
+print(numbers.takeLast(2));      // [4, 5]
+print(numbers.takeFirst(2));     // [1, 2]
+print(numbers.distinct());       // [1, 2, 3, 4, 5]
+print(numbers.reversedList());   // [5, 4, 3, 2, 2, 1]
+print(items.whereNotNull());     // ["a", "b", "c"]
 
+// List chunking
+print(numbers.chunked(2));       // [[1, 2], [2, 3], [4, 5]]
+
+// List utilities
+print(numbers.shuffledList());   // [3, 1, 5, 2, 2, 4] (random order)
+print(numbers.hasUniqueElements()); // false
+print([].isNullOrEmpty());       // true
+
+// Safe operations
+print(numbers.safeGet(10));      // null (instead of throwing error)
+
+// Transformation
+List<String> transformed = numbers.mapToList((n) => "Num: $n");
+print(transformed);              // ["Num: 1", "Num: 2", ...]
 ```
-import 'package:flutter/material.dart';
-import 'extensions_core.dart';
 
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Extensions Demo")),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.showSnackBar("This is a SnackBar!"); // Show SnackBar
-          },
-          child: Text("Show SnackBar"),
-        ),
+### DateTime Extensions
+
+```dart
+DateTime now = DateTime.now();
+DateTime yesterday = now.subtract(Duration(days: 1));
+
+// Date checks
+print(now.isToday());           // true
+print(yesterday.isYesterday()); // true
+print(now.isInFuture());       // false
+print(now.isInPast());         // false
+
+// Formatting
+print(now.format('yyyy-MM-dd')); // "2024-03-20"
+
+// Relative time (requires BuildContext)
+print(yesterday.timeAgo(context));  // "1 day ago"
+
+// Locale-aware formatting (requires BuildContext)
+print(now.formattedDate(context, pattern: 'MMM dd, yyyy')); // "Mar 20, 2024"
+```
+
+### BuildContext Extensions
+
+```dart
+// Snackbar Extensions
+context.showSnackBar("Operation completed successfully!");
+context.removeSnackBar();
+
+// Alert Dialog Extensions
+context.showCusDialog(
+  AlertDialog(
+    title: Text("Alert"),
+    content: Text("This is a custom alert dialog"),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: Text("OK"),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.navigateTo(screen: AnotherPage(), fade: true); // Navigate
-        },
-        child: Icon(Icons.navigate_next),
-      ),
-    );
-  }
-}
+    ],
+  ),
+);
 ```
 
-2. String Extensions
-   Easily validate and manipulate strings.
+### Theme Extensions
 
-dart
+Access theme data and custom theme extensions easily:
 
-```
-import 'extensions_core.dart';
-
-void main() {
-  String email = "example@email.com";
-  print(email.isEmail()); // true
-
-  String text = "hello world";
-  print(text.capitalize()); // Hello world
-  print(text.toTitleCase()); // Hello World
-
-  String url = "https://example.com";
-  print(url.isUrl()); // true
-
-  String phoneNumber = "+1234567890";
-  print(phoneNumber.isPhoneNumber()); // true
-}
+```dart
+// Theme access (implementation details in theme.dart)
+final primaryColor = context.theme.primaryColor;
+final textTheme = context.theme.textTheme;
 ```
 
-3. DateTime Extensions
-   Work with relative times and formatted dates.
+### Widget Extensions
 
-dart
+Chain widget modifications easily:
 
-```
-import 'extensions_core.dart';
+```dart
+Text('Hello')
+  .padding()                 // Add default padding
+  .center                    // Center the widget
+  .expanded                  // Expand to fill space
+  .onTap(() {})             // Add tap handler
+  .opacity(0.8)             // Add opacity
+  .circular(12)             // Add circular border
+  .elevated();              // Add elevation
 
-void main() {
-  DateTime date = DateTime.now().subtract(Duration(minutes: 10));
+// Flexible sizing
+Text('Hello').size(width: 100, height: 50);
 
-  print(date.timeAgo()); // "10 minutes ago"
-  print(date.isToday()); // true
+// Custom alignment
+Text('Hello').align(Alignment.centerLeft);
 
-  String formatted = date.format("yyyy-MM-dd");
-  print(formatted); // "2024-06-17"
-}
-```
-
-4. List Extensions
-   Perform advanced list operations like chunking, reversing, and filtering duplicates.
-
-dart
-
-```
-import 'extensions_core.dart';
-
-void main() {
-  List<int> numbers = [1, 2, 3, 3, 4, 5, 6];
-
-  print(numbers.takeLast(3)); // [4, 5, 6]
-  print(numbers.distinct()); // [1, 2, 3, 4, 5, 6]
-  print(numbers.chunked(2)); // [[1, 2], [3, 3], [4, 5], [6]]
-  print(numbers.reversedList()); // [6, 5, 4, 3, 3, 2, 1]
-}
+// Custom padding
+Text('Hello').padding(EdgeInsets.all(8));
 ```
 
-5. Navigation Extensions
-   Simplify navigation with custom transitions.
+### Navigation Extensions
 
-dart
+Simplified navigation methods:
 
-```
-import 'extensions_core.dart';
+```dart
+// Basic navigation
+context.pushScreen(HomeScreen());
 
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.navigateTo(screen: AnotherPage(), fade: true);
-          },
-          child: Text("Go to Another Page"),
-        ),
-      ),
-    );
-  }
-}
+// Replace current screen
+context.replaceScreen(LoginScreen());
+
+// Clear stack and show new screen
+context.clearStackAndShow(DashboardScreen());
+
+// Navigate with fade transition
+context.pushWithFade(DetailsScreen());
+
+// Pop until specific route
+context.popUntilRoute('/home');
 ```
 
-6. SnackBar Extensions
-   Quickly show and manage SnackBars.
+### Number Extensions
 
-dart
+Format and convert numbers easily:
 
-```
-import 'extensions_core.dart';
+```dart
+double price = 1234.5;
+int count = 1200000;
 
-void main(BuildContext context) {
-  context.showSnackBar("This is a SnackBar!");
-  context.removeSnackBar();
-}
-```
+// Currency formatting
+print(price.toCurrency());           // "$1,234.50"
+print(price.toCurrency(symbol: '€')); // "€1,234.50"
 
-### API Reference
+// Compact number format
+print(count.toCompact());            // "1.2M"
 
-#### BuildContext Extensions
+// Percentage
+print(75.toPercentage());           // "75%"
 
-- showSnackBar(String message): Show a SnackBar.
-- navigateTo({required Widget screen, bool fade}): Navigate to a new - screen with optional fade transition.
-- showCusDialog(Widget dialog): Show a custom dialog.
-- removeSnackBar(): Remove the current SnackBar.
+// Duration conversion
+print(5.minutes);                   // Duration(minutes: 5)
+print(24.hours);                    // Duration(hours: 24)
 
-#### String Extensions
+// Widget spacing
+Container(
+  child: Column(
+    children: [
+      Text('First'),
+      10.heightBox,                // SizedBox for vertical spacing
+      Text('Second'),
+      20.widthBox,                 // SizedBox for horizontal spacing
+    ],
+  ),
+);
 
-- isEmail(): Checks if the string is a valid email.
-- capitalize(): Capitalizes the first letter of the string.
-- isUrl(): Checks if the string is a valid URL.
-- reverse(): Reverses the string.
-- truncate(int maxLength): Truncates the string with an optional ellipsis.
-
-#### DateTime Extensions
-
-- isToday(): Checks if the date is today.
-  timeAgo(): Returns a relative time string like "5 minutes ago".
-  format(String pattern): Formats the date using a pattern.
-
-#### List Extensions
-
-isNullOrEmpty(): Checks if the list is null or empty.
-takeLast(int n): Returns the last n elements.
-chunked(int chunkSize): Splits the list into chunks.
-distinct(): Removes duplicate values.
-
-#### Requirements
-
-```
-Flutter: >=1.17.0
-Dart SDK: >=3.6.0
-Dependencies:
-intl: ^0.20.1
+// Number utilities
+print(5.isBetween(1, 10));        // true
+print(15.clamp(0, 10));           // 10
+print(45.toRadians);              // Convert to radians
+print(pi.toDegrees);              // Convert to degrees
 ```
 
-License
-This project is licensed under the MIT License.
+## Requirements
 
-Credits
-Developed with ❤️ by Chris Thapa. 🚀
+- Dart SDK: ^3.6.0
+- Flutter: >=1.17.0
+
+## Additional Information
+
+- [Homepage](https://github.com/LeanQChris/extensions.git)
+- [Bug Reports and Feature Requests](https://github.com/LeanQChris/extensions/issues)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. When contributing:
+
+1. Ensure your code follows the Dart style guide
+2. Add tests for any new features
+3. Update documentation accordingly
+4. Create an issue first for any major changes
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
